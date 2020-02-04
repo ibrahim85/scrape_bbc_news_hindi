@@ -3,18 +3,7 @@ import scrapy
 import datetime
 from BBC_NewsHindi.items import BbcNewshindiItem
 
-g_dict_months = {'يناير':'01',
-                 'فبراير': '02',
-                 'مارس': '03',
-                 'ابريل': '04',
-                 'مايو': '05',
-                 'يونية': '06',
-                 'يوليو': '07',
-                 'اغسطس':'08',
-                 'سبتمبر': '09',
-                 'اكتوبر': '10',
-                 'نوفمبر': '11',
-                 'ديسمبر': '12'
+g_dict_months = {'يناير':'01', 'فبراير': '02', 'مارس': '03', 'أبريل': '04', 'مايو': '05','يونيو': '06', 'يوليو': '07', 'أغسطس': '08', 'سبتمبر': '09', 'أكتوبر': '10', 'نوفمبر': '11','ديسمبر': '12'
                 }
                  
 # create a new file in every crawl
@@ -68,8 +57,8 @@ class RecentdaynewscrawlerSpider(scrapy.Spider):
     def getNewsDetails(self, item, response):
         #check_recent = str(response.xpath("//*[@class='date date--v2']/text()").extract_first().encode('utf-8')).strip()
         check_recent = str(response.xpath("//*[@class='date date--v2']/text()").extract_first()).strip()
-
-        news_recent_day = check_recent[:2] + g_dict_months[check_recent.split()[1]] + check_recent[-4:]
+        #print((check_recent.split()[1]).strip('/'))
+        news_recent_day = check_recent[:2] + g_dict_months[(check_recent.split()[1]).strip('/')] + check_recent[-4:]
 
         today_date = datetime.date.today().strftime("%d%m%Y")
 
