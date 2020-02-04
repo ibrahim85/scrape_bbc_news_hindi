@@ -57,10 +57,16 @@ class RecentdaynewscrawlerSpider(scrapy.Spider):
     def getNewsDetails(self, item, response):
         #check_recent = str(response.xpath("//*[@class='date date--v2']/text()").extract_first().encode('utf-8')).strip()
         check_recent = str(response.xpath("//*[@class='date date--v2']/text()").extract_first()).strip()
-        #print((check_recent.split()[1]).strip('/'))
-        news_recent_day = check_recent[:2] + g_dict_months[(check_recent.split()[1]).strip('/')] + check_recent[-4:]
-
+        #print(check_recent[:1] + g_dict_months[(check_recent.split()[1]).strip('/')] + check_recent[-4:])
+        if int(check_recent[:1]) < 10:
+            day1="0"+check_recent[:1]
+        else:
+            day1=check_recent[:1]
+        news_recent_day = day1 + g_dict_months[(check_recent.split()[1]).strip('/')] + check_recent[-4:]
+        
         today_date = datetime.date.today().strftime("%d%m%Y")
+        #print(datetime.datetime.strptime(news_recent_day.strip(' '),"%d%m%Y"))
+        #print(news_recent_day,today_date)
 
         if news_recent_day == today_date:
 
