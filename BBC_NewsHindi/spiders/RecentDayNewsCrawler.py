@@ -3,7 +3,7 @@ import scrapy
 import datetime
 from BBC_NewsHindi.items import BbcNewshindiItem
 
-g_dict_months = {'जनवरी': '01', 'फरवरी': '02', 'मार्च': '03', 'अप्रैल': '04', 'मई': '05', 'जून': '06', 'जुलाई': '07', 'अगस्त': '08', 'सितंबर': '09', 'अक्टूबर': '10', 'नवंबर': '11', 'दिसंबर': '12'}
+g_dict_months = {'يناير': '01', 'فبراير': '02', 'مارس': '03', 'ابريل': '04', 'مايو': '05', 'يونية': '06', 'يوليو': '07', 'اغسطس': '08', 'سبتمبر': '09', 'اكتوبر': '10', 'نوفمبر': '11', 'ديسمبر': '12'}
 
 # create a new file in every crawl
 file_obj = open('third_file.txt', 'w+')
@@ -17,10 +17,10 @@ class RecentdaynewscrawlerSpider(scrapy.Spider):
     allowed_domains = ["bbc.com"]
 
     def urlFunc():
-        groups_list = ['india', 'international', 'entertainment', 'sport', 'science', 'social', 'media/video', 'media/audio', 'media/photogalleries', 'in_depth']
-        url_list = ["https://www.bbc.com/hindi"]
+        groups_list = ['arabic', 'international', 'entertainment', 'sport', 'science', 'social', 'media/video', 'media/audio', 'media/photogalleries', 'in_depth']
+        url_list = ["https://www.bbc.com/arabic"]
         for group in groups_list:
-            url = "https://www.bbc.com/hindi/" + group
+            url = "https://www.bbc.com/arabic/" + group
             url_list.append(url)
         # print(url_list)
         return url_list
@@ -54,7 +54,7 @@ class RecentdaynewscrawlerSpider(scrapy.Spider):
 
     # Data source written to file from main news page
     def getNewsDetails(self, item, response):
-    	check_recent = str(response.xpath("//*[@class='date date--v2']/text()").extract_first().encode('utf-8')).strip()
+        check_recent = str(response.xpath("//*[@class='date date--v2']/text()").extract_first().encode('utf-8')).strip()
 
         news_recent_day = check_recent[:2] + g_dict_months[check_recent.split()[1]] + check_recent[-4:]
 
