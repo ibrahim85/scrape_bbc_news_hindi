@@ -13,10 +13,10 @@ class NewscrawlerSpider(scrapy.Spider):
     allowed_domains = ["bbc.com"]
 
     def urlFunc():
-        groups_list = ['india', 'international', 'entertainment', 'sport', 'science', 'social', 'media/video', 'media/audio', 'media/photogalleries', 'in_depth']
-        url_list = ["https://www.bbc.com/hindi"]
+        groups_list = ['arabic', 'international', 'entertainment', 'sport', 'science', 'social', 'media/video', 'media/audio', 'media/photogalleries', 'in_depth']
+        url_list = ["https://www.bbc.com/arabic"]
         for group in groups_list:
-            url = "https://www.bbc.com/hindi/" + group
+            url = "https://www.bbc.com/arabic/" + group
             url_list.append(url)
         # print(url_list)
         return url_list
@@ -50,14 +50,14 @@ class NewscrawlerSpider(scrapy.Spider):
 
     # Data source written to file from main news page
     def getNewsDetails(self, item, response):
-        news_title = response.xpath("//*[@class='story-body__h1']/text()").extract_first().encode('utf-8')
+        news_title = response.xpath("//*[@class='story-body__h1']/text()").extract_first()#.encode('utf-8')
         if news_title is not None:
             item['title_headlines'] = news_title
         else:
             item['title_headlines'] = "Not Found"
 
         lNewsContent = response.xpath("//*[@class='story-body__inner']/p/text()").extract()
-        news_content = ('\n'.join(lNewsContent)).encode('utf-8')
+        news_content = ('\n'.join(lNewsContent))#.encode('utf-8')
         if news_content is not None:
             item['content_news'] = news_content
         else:
